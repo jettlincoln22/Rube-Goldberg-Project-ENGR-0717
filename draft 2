@@ -1,0 +1,39 @@
+int dirA=12;
+int brakeA=9;
+int speedA=3;
+
+int forcePIN = A0;
+int threshold = 18;
+void setup() {
+pinMode(dirA, OUTPUT);
+pinMode(brakeA, OUTPUT);
+pinMode(speedA, OUTPUT);
+
+digitalWrite(brakeA, LOW);
+Serial.begin(9600);
+}
+
+void loop() {
+
+int forceVal=analogRead(forcePIN);
+Serial.println(forceVal);
+digitalWrite(dirA, HIGH);
+digitalWrite(brakeA, LOW);
+if (forceVal>threshold){
+
+digitalWrite(dirA, HIGH);
+analogWrite(speedA, 255);
+delay(3000);
+digitalWrite(dirA, LOW);
+digitalWrite(brakeA, HIGH);
+
+delay(10000);
+digitalWrite(dirA, HIGH);
+analogWrite(speedA, 255);
+delay(3000);
+digitalWrite(dirA, LOW);
+digitalWrite(brakeA, HIGH);
+}
+
+
+}
