@@ -3,7 +3,7 @@ int brakeA=9;
 int speedA=3;
 
 int forcePIN = A0;
-int threshold = 11;
+int threshold = 110;
 void setup() {
 pinMode(dirA, OUTPUT);
 pinMode(brakeA, OUTPUT);
@@ -26,6 +26,7 @@ analogWrite(speedA, 255);
 delay(3000);
 //analogWrite(speedA,0);
 //digitalWrite(brakeA, HIGH);
+analogWrite(speedA, 0);
 digitalWrite(brakeA, HIGH);
 threshold=550;
 
