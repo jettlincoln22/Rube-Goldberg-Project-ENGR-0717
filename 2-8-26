@@ -1,0 +1,68 @@
+int dirA = 12;
+int brakeA = 9;
+int speedA = 3;
+
+int dirB = 13;
+int brakeB = 8;
+int speedB = 11;
+
+int lightPIN = A1;
+int forcePIN = A0;
+
+int forceThreshold = 67;
+int lightThreshold = 300;
+
+void setup() {
+  pinMode(dirA, OUTPUT);
+  pinMode(brakeA, OUTPUT);
+  pinMode(speedA, OUTPUT);
+
+  pinMode(dirB, OUTPUT);
+  pinMode(brakeB, OUTPUT);
+  pinMode(speedB, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void runMotorA() {
+  digitalWrite(brakeA, LOW);
+  digitalWrite(dirA, LOW);
+  analogWrite(speedA, 100);
+  delay(1750);
+  digitalWrite(brakeA, HIGH);
+}
+
+void runMotorB() {
+  digitalWrite(brakeB, LOW);
+  digitalWrite(dirB, HIGH);
+  analogWrite(speedB, 255);
+  delay(3000);
+  digitalWrite(brakeB, HIGH);
+}
+
+void loop() {
+
+  int forceVal = analogRead(forcePIN);
+  int lightVal = analogRead(lightPIN);
+
+  Serial.print("Force: ");
+  Serial.print(forceVal);
+  Serial.print("   Light: ");
+  Serial.println(lightVal);
+
+  // --- Motor A logic ---
+  if (forceVal > forceThreshold) {
+    runMotorA();
+  } else {
+    delay(5000);  // backup delay
+    runMotorA();  // guaranteed 3-second run
+  }
+
+  // --- Motor B logic ---
+  if (lightVal < lightThreshold) {
+    runMotorB();
+  } else {
+    delay(5000);  // backup delay
+    runMotorB();  // guaranteed 3-second run
+  }
+}
