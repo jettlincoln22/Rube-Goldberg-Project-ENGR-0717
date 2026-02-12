@@ -7,10 +7,10 @@ int brakeB = 8;
 int speedB = 11;
 
 double lightPIN = A1;
-int forcePIN = A0;
+double lightPIN1 = A0;
 
-int forceThreshold = 15;
-double lightThreshold = 17;
+double lightThreshold = 17.1;
+double lightThreshold1 = 15;
 
 
 void setup() {
@@ -27,31 +27,31 @@ void setup() {
 }
 
 void loop() {
-
-  int forceVal = analogRead(forcePIN);
+  int lightval1 = analogRead(lightPIN1);
   double lightVal = analogRead(lightPIN);
-  Serial.print("Force: ");
-  Serial.print(forceVal);
+  Serial.print("Lightballon: ");
+  Serial.print(lightval1);
   Serial.print("   Light: ");
   Serial.println(lightVal);
 
   // Motor A
-  if (forceVal > forceThreshold) {
+  if (lightval1 > lightThreshold1) {
   digitalWrite(brakeA, LOW);
   digitalWrite(dirA, LOW);
   analogWrite(speedA, 150);
   delay(1750);
   analogWrite(speedA, 0);
-  digitalWrite(brakeA, HIGH);  } 
+  digitalWrite(brakeA, HIGH); 
+  //delay(15000);
+  } 
 
   //Motor B
   if (lightVal > lightThreshold) {
   digitalWrite(brakeB, LOW);
   digitalWrite(dirB, HIGH);
   analogWrite(speedB, 255);
-  delay(3000);
+  delay(1000);
   analogWrite(speedB, 0);
-  digitalWrite(brakeB, HIGH);
-  } 
+  digitalWrite(brakeB, HIGH);} 
 
 }
